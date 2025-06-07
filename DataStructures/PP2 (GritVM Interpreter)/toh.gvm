@@ -1,0 +1,44 @@
+# Towers of Hanoi Code for GritVM
+# Memory Layout:
+#	0: N (Provided with initialMemory)
+#	1: Result (2^n - 1)
+#	2: Counter (used in calculations but deleted before final output)
+
+#Checks that memory has space for at least one input from initial memory then clears the accumulator
+CHECKMEM 1 
+CLEAR
+
+# Checks to see if N is zero and halts if it is
+INSERT 1
+AT 0
+JUMPNZERO 2 
+HALT
+
+# sets the counter and result to 1
+CLEAR
+ADDCONST 1
+INSERT 2
+ADDCONST 1
+SET 1
+
+# Checks to see if counter == N
+AT 0
+SUBMEM 2
+JUMPNZERO 6
+
+# If counter == N, Result = 2^N, subtract 1 for final result
+# then clear counter so output result = test case
+AT 1
+SUBCONST 1
+SET 1
+ERASE 2
+HALT
+
+# Sets result = 2^N 
+AT 1
+MULCONST 2
+SET 1
+AT 2
+ADDCONST 1
+SET 2
+JUMPREL -14
